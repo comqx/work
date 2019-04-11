@@ -1,0 +1,16 @@
+stages:
+- name: Build
+  steps:
+  - runScriptConfig:
+      image: alpine:latest
+#      shellScript: |-
+- name: Publish
+  steps:
+  - publishImageConfig:
+      dockerfilePath: ./Dockerfile
+      buildContext: .
+      tag: registry.cn-beijing.aliyuncs.com/glodon-common/dingding:${CICD_EXECUTION_SEQUENCE}
+- name: Deploy
+  steps:
+  - applyYamlConfig:
+      path: ./webhook-dingding.yaml

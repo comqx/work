@@ -1,0 +1,84 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: webhook-ding
+  name: webhook-ding
+spec:
+  selector:
+    matchLabels:
+      app: webhook-ding
+  template:
+    metadata:
+      labels:
+        app: webhook-ding
+    spec:
+      imagePullSecrets:
+      - name: ali-ops-registry
+      containers:
+      - env:
+        - name: DING_API
+#测试
+          value: https://oapi.dingtalk.com/robot/send?access_token=57f8562a3489757020a75ad8a4cf28a5049e027eb03708d87af6004c3ff94c43
+        - name: GRAFANA_URL
+          value: http://192.168.30.243:30258
+        - name: PROMETHEUS_URL
+          value: http://192.168.30.243:30256
+        - name: CG_ENV
+          value: 'in-test'
+        image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
+        imagePullPolicy: Always
+        livenessProbe:
+          failureThreshold: 3
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          tcpSocket:
+            port: 80
+          timeoutSeconds: 5
+        name: webhook-ding
+        ports:
+        - containerPort: 80
+          name: webhook-ding
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          tcpSocket:
+            port: 80
+          timeoutSeconds: 5
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1000Mi
+          requests:
+            cpu: 500m
+            memory: 500Mi
+        volumeMounts:
+        - mountPath: /etc/localtime
+          name: timezone
+      restartPolicy: Always
+      volumes:
+      - name: timezone
+        hostPath:
+          path: /etc/localtime
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: webhook-ding
+  name: dingding-svc
+spec:
+  ports:
+  - nodePort: 30259
+    port: 80
+    protocol: TCP
+    targetPort: webhook-ding
+  selector:
+    app: webhook-ding
+  type: NodePort
+
