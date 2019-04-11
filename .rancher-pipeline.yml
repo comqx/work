@@ -3,7 +3,6 @@ stages:
   steps:
   - runScriptConfig:
       image: alpine:latest
-#      shellScript: |-
 - name: Publish
   steps:
   - publishImageConfig:
