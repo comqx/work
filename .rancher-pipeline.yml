@@ -9,7 +9,9 @@ stages:
   - publishImageConfig:
       dockerfilePath: ./Dockerfile
       buildContext: .
-      tag: registry.cn-beijing.aliyuncs.com/glodon-common/dingding:${CICD_EXECUTION_SEQUENCE}
+      tag: glodon-common/dingding:${CICD_EXECUTION_SEQUENCE}
+      pushRemote: true
+      registry: registry.cn-beijing.aliyuncs.com
 - name: Deploy
   steps:
   - applyYamlConfig:
