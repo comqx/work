@@ -9,7 +9,11 @@ stages:
       dockerfilePath: ./Dockerfile
       buildContext: .
       tag: glodon-common/dingding:${CICD_EXECUTION_SEQUENCE}
+      pushRemoute: true
       registry: registry.cn-beijing.aliyuncs.com
+    env:
+      PLUGIN_DEBUG: true
+      PLUGIN_INSECURE: true
 - name: Deploy
   steps:
   - applyYamlConfig:
