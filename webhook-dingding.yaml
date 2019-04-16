@@ -74,8 +74,7 @@ metadata:
   name: dingding-svc
 spec:
   ports:
-  - nodePort: 30259
-    port: 80
+  - port: 80
     protocol: TCP
     targetPort: webhook-ding
   selector:
