@@ -1,4 +1,4 @@
-FROM alpine:latest 
+FROM alpine:3.6
 WORKDIR /webhook-dingding
 COPY . /webhook-dingding/
 RUN apk update && \
