@@ -8,9 +8,9 @@ stages:
   - publishImageConfig:
       dockerfilePath: ./Dockerfile
       buildContext: .
-      tag: glodon-common/dingding:${CICD_EXECUTION_SEQUENCE}
+      tag: dingding:${CICD_EXECUTION_SEQUENCE}
       pushRemoute: true
-      registry: registry.cn-beijing.aliyuncs.com
+      registry: registry.cn-beijing.aliyuncs.com/glodon-common
     env:
       PLUGIN_DEBUG: true
       PLUGIN_INSECURE: true
