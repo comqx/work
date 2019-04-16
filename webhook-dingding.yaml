@@ -4,7 +4,7 @@ metadata:
   labels:
     app: webhook-ding
   name: webhook-ding
-  namespace: auth-ls
+  namespace: default
 spec:
   selector:
     matchLabels:
@@ -73,7 +73,7 @@ metadata:
   labels:
     app: webhook-ding
   name: dingding-svc
-  namespace: auth-ls  
+  namespace: default
 spec:
   ports:
   - port: 80
