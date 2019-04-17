@@ -9,7 +9,7 @@ stages:
       dockerfilePath: ./Dockerfile
       buildContext: .
       tag: glodon-common/dingding:${CICD_EXECUTION_SEQUENCE}
-      pushRemoute: true
+      pushRemote: true   
       registry: registry.cn-beijing.aliyuncs.com
     env:
       PLUGIN_DEBUG: "true"
