@@ -2,7 +2,7 @@ stages:
 - name: Build
   steps:
   - runScriptConfig:
-      image: alpine:latest
+      image: alpine:3.6
 - name: Publish
   steps:
   - publishImageConfig:
