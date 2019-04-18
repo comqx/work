@@ -12,8 +12,9 @@ stages:
       pushRemote: true
       registry: registry.cn-beijing.aliyuncs.com
     env:
-      PLUGIN_DEBUG: true
-      PLUGIN_INSECURE: true
+      PLUGIN_DEBUG: "true"
+      PLUGIN_INSECURE: "true"
+      
 - name: Deploy
   steps:
   - applyYamlConfig:
