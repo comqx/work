@@ -1,26 +1,28 @@
-# example
 stages:
-  - name: Build something
-    # Conditions for stages
-    when:
-      branch: dingding
-      event: [ push, pull_request ]
-
-
-  - name: Publish my image
-    steps:
-    - publishImageConfig:
-        dockerfilePath: ./Dockerfile
-        buildContext: .
-        tag: glodon-common/dingding:${CICD_EXECUTION_SEQUENCE}
-        # Optionally push to remote registry
-        pushRemote: true
-        registry: registry.cn-beijing.aliyuncs.com
-  - name: Deploy some workloads
-    steps:
-    - applyYamlConfig:
-        path: ./deployment.yaml
-# branch conditions for the pipeline
+- name: Build something
+  when:
+    branch:
+      include:
+      - dingding
+    event:
+      include:
+      - push
+      - pull_request
+- name: Publish my image
+  steps:
+  - publishImageConfig:
+      dockerfilePath: ./Dockerfile
+      buildContext: .
+      tag: glodon-common/dingding:${CICD_EXECUTION_SEQUENCE}
+      pushRemote: true
+      registry: registry.cn-beijing.aliyuncs.com
+- name: Deploy some workloads
+  steps:
+  - applyYamlConfig:
+      path: ./deployment.yaml
 branch:
-  include: [ release, dev/*]
-  exclude: [ tag ]
+  include:
+  - release
+  - dev/*
+  exclude:
+  - tag
