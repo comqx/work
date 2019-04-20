@@ -19,6 +19,6 @@ stages:
       path: ./deployment.yaml
 branch:
   include:
-  - release
-  - dev/*
+  - release.*
+  - dev.*
 
