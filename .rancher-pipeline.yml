@@ -1,25 +1,25 @@
+# example
 stages:
-- name: Build
-  steps:
-  - runScriptConfig:
-      image: alpine:3.6
-- name: Publish
-  steps:
-  - publishImageConfig:
-      dockerfilePath: ./Dockerfile
-      buildContext: .
-      tag: glodon-common/dingding:${CICD_EXECUTION_SEQUENCE}
-      pushRemote: true
-      registry: registry.cn-beijing.aliyuncs.com
-    env:
-      PLUGIN_DEBUG: "true"
-      PLUGIN_INSECURE: "true"
-      
-- name: Deploy
-  steps:
-  - applyYamlConfig:
-      path: ./webhook-dingding.yaml
-timeout: 60
+  - name: Build something
+    # Conditions for stages
+    when:
+      branch: dingding
+      event: [ push, pull_request ]
+
+  - name: Publish my image
+    steps:
+    - publishImageConfig:
+        dockerfilePath: ./Dockerfile
+        buildContext: .
+        tag: glodon-common/dingding:${CICD_EXECUTION_SEQUENCE}
+        # Optionally push to remote registry
+        pushRemote: true
+        registry: registry.cn-beijing.aliyuncs.com
+  - name: Deploy some workloads
+    steps:
+    - applyYamlConfig:
+        path: ./deployment.yaml
+# branch conditions for the pipeline
 branch:
-  include:
-  - dingding
+  include: [ release, dev/*]
+  exclude: [ tag ]
